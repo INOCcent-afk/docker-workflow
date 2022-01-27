@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  app:
+      image: daveinoc/demoapp:1.0
+      depends_on:
+          - postgres
+      ports:
+          - "8080:8080"
+      volumes: 
+          - ./:/usr/src/app/
+      command: yarn dev
+  postgres:
+      image: postgres
+      restart: always
+      environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=passwordinoc
+          - POSTGRES_DB=alexx
+      ports:
+          - "5432:5432"
+      volumes:
+          - ./database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql
